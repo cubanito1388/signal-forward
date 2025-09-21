@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signal Forward</title>
+    <style>
+        :root {
+            --primary-color: #0A2240; /* Dark Navy Blue */
+            --secondary-color: #F0F2F5; /* Light Gray */
+            --accent-color: #007BFF; /* Bright Blue */
+            --text-color: #333;
+            --light-text-color: #FFF;
+            --header-font: 'Arial', sans-serif;
+            --body-font: 'Georgia', serif;
+        }
+
+        body {
+            font-family: var(--body-font);
+            margin: 0;
+            padding: 0;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header and Navigation */
+        .header {
+            background-color: var(--primary-color);
+            color: var(--light-text-color);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            font-family: var(--header-font);
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+            color: var(--light-text-color);
+        }
+
+        .nav-links {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .nav-links li {
+            padding: 0 15px;
+        }
+
+        .nav-links a {
+            font-family: var(--header-font);
+            color: var(--light-text-color);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: color 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
+        /* Page Content */
+        .page {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .card {
+            background: #FFF;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            padding: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        h1, h2, h3 {
+            font-family: var(--header-font);
+            color: var(--primary-color);
+        }
+
+        /* Home Page Specifics */
+        .hero {
+            text-align: center;
+            padding: 4rem 1rem;
+            background: linear-gradient(rgba(10, 34, 64, 0.8), rgba(10, 34, 64, 0.8)), url('https://images.unsplash.com/photo-1587825140708-df876a5b974b?q=80&w=2070') no-repeat center center/cover;
+            color: var(--light-text-color);
+            border-radius: 8px;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            color: var(--light-text-color);
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--accent-color);
+            color: var(--light-text-color);
+            padding: 12px 25px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-family: var(--header-font);
+            font-weight: bold;
+            margin-top: 1rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn:hover {
+            background-color: #0056b3;
+        }
+
+        /* Features Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        .feature-item {
+            text-align: center;
+        }
+        .feature-item h3 {
+            font-size: 1.5rem;
+        }
+
+        /* About Page */
+        .bio-section {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+        .bio-section img {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--primary-color);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--primary-color);
+            color: var(--light-text-color);
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .nav-links {
+                margin-top: 1rem;
+                width: 100%;
+                flex-direction: column;
+            }
+            .nav-links li {
+                padding: 10px 0;
+                text-align: center;
+                width: 100%;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .bio-section {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <div class="container navbar">
+            <a href="#home" class="logo">Signal Forward</a>
+            <ul class="nav-links">
+                <li><a href="#home" class="nav-link active" data-page="home">Home</a></li>
+                <li><a href="#about" class="nav-link" data-page="about">About the Founder</a></li>
+                <li><a href="#prototype" class="nav-link" data-page="prototype">App Prototype</a></li>
+                <li><a href="#marketing" class="nav-link" data-page="marketing">Marketing</a></li>
+                <li><a href="#guide" class="nav-link" data-page="guide">User Guide</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Home Page -->
+        <section id="home" class="page active">
+            <div class="hero">
+                <h1>Translate Your Service Into a Civilian Tech Career</h1>
+                <p>Signal Forward is a dedicated platform helping service members and veterans leverage their military experience to build successful careers in the technology industry.</p>
+                <a href="#prototype" class="btn" onclick="showPage('prototype')">Explore the App</a>
+            </div>
+
+            <div class="features card">
+                <div class="feature-item">
+                    <h3>MOS Translator</h3>
+                    <p>Convert your military skills (e.g., 25H, 25B, 25Q) into civilian job descriptions that employers understand.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Certification Pathways</h3>
+                    <p>Get clear roadmaps for obtaining crucial IT certifications like Network+ and CCNA to advance your career.</p>
+                </div>
+                <div class="feature-item">
+                    <h3>Education Hub</h3>
+                    <p>Find and apply to associate's and bachelor's degree programs in computer science and cybersecurity tailored for veterans.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About You Page -->
+        <section id="about" class="page">
+            <div class="card">
+                <h2>About the Founder: The Story of SGT. Evian Boza</h2>
+                <div class="bio-section">
+                    <svg width="200" height="200" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style="border-radius: 50%; border: 5px solid var(--primary-color);">
+                        <path d="M12 12C14.21 12 16 10.21 16 8C16 5.79 14.21 4 12 4C9.79 4 8 5.79 8 8C8 10.21 9.79 12 12 12ZM12 14C9.33 14 4 15.33 4 18V20H20V18C20 15.33 14.67 14 12 14Z" fill="#AAB8C2"/>
+                    </svg>
+                    <div>
+                        <p>Evian Boza's journey is one of resilience, determination, and the pursuit of a lifelong dream. Born in Matanzas, Cuba, he moved to Miami, Florida, at 15. After high school, he built a career in business security integrations, a field that gave him his first taste of the tech world.</p>
+                        <p>After over a decade in the civilian workforce, a divorce prompted him to follow a long-held aspiration: serving in the United States Army. At the age of 32, Evian joined the Army as a 25Q, a Multichannel Transmission Systems Operator-Maintainer. This decision marked the beginning of a new chapter, one defined by service and a thorough examination of network communications.</p>
+                        <p>Stationed at Fort Cavazos, SGT. Boza serves in the 11th Signal Brigade, where he has cross-trained into other technical MOS fields like 25L (Cable Systems Installer) and 25B (Information Technology Specialist). His experience navigating the transition from civilian life to a highly technical military role, and his ambition to earn Network+ and CCNA certifications and degrees in computer science and cybersecurity, became the inspiration for Signal Forward. He envisioned a tool that could help his fellow service members see the clear path from their military training to a rewarding civilian tech career.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Application Prototype Info Page -->
+        <section id="prototype" class="page">
+            <div class="card">
+                <h2>Application Prototype: Signal Forward Features</h2>
+                <p>Signal Forward is designed to be a comprehensive career transition tool. Here are its core features:</p>
+                
+                <h3>1. MOS to Career Translator</h3>
+                <p>This tool demystifies the transition process by mapping military roles to civilian equivalents. For example:</p>
+                <ul>
+                    <li><strong>25H (Network Communication Systems Specialist):</strong> Translates to roles like Network Technician, Systems Administrator, or Telecommunications Specialist. The tool highlights skills in installing, operating, and maintaining IP-based networks and COMSEC devices. </li>
+                    <li><strong>25B (Information Technology Specialist):</strong> Maps to IT Support Specialist, Network Administrator, and Cybersecurity Analyst roles. It emphasizes experience with system administration, network configuration, and cyber defense.</li>
+                    <li><strong>25Q (Multichannel Transmission Systems Operator):</strong> Connects to careers like Field Service Technician or Satellite Communications Technician, focusing on skills with line-of-sight and satellite systems.</li>
+                </ul>
+
+                <h3>2. Certification Pathway Planner</h3>
+                <p>Achieving industry-recognized certifications is crucial. This feature provides step-by-step guides for certifications like:</p>
+                <ul>
+                    <li><strong>CompTIA Network+:</strong> A foundational certification for networking careers, often recommended for military personnel. The planner details study resources, exam objectives, and information on using military benefits for funding. </li>
+                    <li><strong>Cisco Certified Network Associate (CCNA):</strong> A more advanced certification that validates skills in installing, configuring, and troubleshooting switched and routed networks. The app provides a roadmap and connects users with training programs.</li>
+                </ul>
+
+                <h3>3. Mentorship Network</h3>
+                <p>Connect with veterans who have successfully transitioned into the tech industry. Users can search for mentors based on their former MOS, current civilian role, or company. Successful veteran mentoring platforms inspire this feature.</p>
+            </div>
+        </section>
+
+        <!-- Marketing Page -->
+        <section id="marketing" class="page">
+            <div class="card">
+                <h2>Why Choose Signal Forward?</h2>
+                <p>Your service has equipped you with unparalleled discipline, technical skills, and a mission-oriented mindset. Signal Forward ensures the civilian world recognizes that value.</p>
+
+                <h3>For Service Members, By Service Members</h3>
+                <p>Built from the real-world experience of a fellow soldier, Signal Forward understands the unique challenges and opportunities of military-to-civilian transition. We speak your language and translate it for hiring managers.</p>
+                
+                <h3>A Clear Path to Success</h3>
+                <p>Don't get lost in translation. We provide the intelligence and tools you need to navigate the civilian job market with military precision. [10] From identifying the right career path to securing the necessary certifications, we are your digital ally. </p>
+
+                <h3>Free for All Who Serve</h3>
+                <p>As a commitment to our community, Signal Forward is, and always will be, completely free for all active-duty service members, reservists, National Guard, and veterans.</p>
+                
+                <div style="text-align: center; margin-top: 2rem;">
+                    <a href="#home" class="btn" onclick="showPage('home')">Get Started Today</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- User Guide Page -->
+        <section id="guide" class="page">
+            <div class="card">
+                <h2>User Guide & FAQ</h2>
+                
+                <h3>How do I get started?</h3>
+                <p><strong>Step 1: Create Your Profile.</strong> Sign up and enter your MOS, training background, and career goals. The more detail you provide, the better we can personalize your experience.</p>
+                <p><strong>Step 2: Use the MOS Translator.</strong> Navigate to the "Translator" tab and see which civilian careers are a strong match for your military experience. Explore job descriptions, salary expectations, and required skills.</p>
+                <p><strong>Step 3: Plan Your Certifications.</strong> Visit the "Certifications" page to see recommended credentials for your desired career path. Follow our step-by-step guides to prepare for exams.</p>
+                <p><strong>Step 4: Connect with a Mentor.</strong> Use the "Mentorship" network to find and connect with veterans in your target field for advice and networking.</p>
+
+                <h3>Frequently Asked Questions</h3>
+                <p><strong>Is this service really free?</strong><br>Yes, 100%. There are no hidden fees or premium tiers for service members and veterans.</p>
+                <p><strong>How is my data used?</strong><br>Your data is used solely to personalize your experience within the app. We do not share your personal information with third parties without your explicit consent.</p>
+                <p><strong>Can I use this app before I transition out of the military?</strong><br>Absolutely. We recommend starting 12-18 months before your separation date to give yourself ample time to plan, study for certifications, and network. </p>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Signal Forward. A prototype was developed for educational purposes.</p>
+        </div>
+    </footer>
+
+    <script>
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pages = document.querySelectorAll('.page');
+
+        function showPage(pageId) {
+            // Hide all pages
+            pages.forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Show the target page
+            const targetPage = document.getElementById(pageId);
+            if (targetPage) {
+                targetPage.classList.add('active');
+            }
+
+            // Update active state on nav links
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.page === pageId) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Scroll to top of the page content
+            window.scrollTo(0, 0);
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const pageId = e.target.dataset.page;
+                showPage(pageId);
+                // Update URL hash for better history management
+                history.pushState(null, '', `#${pageId}`);
+            });
+        });
+
+        // Handle browser back/forward buttons
+        window.onpopstate = () => {
+            const pageId = window.location.hash.substring(1) || 'home';
+            showPage(pageId);
+        };
+
+        // Show initial page based on URL hash
+        document.addEventListener('DOMContentLoaded', () => {
+            const initialPageId = window.location.hash.substring(1) || 'home';
+            showPage(initialPageId);
+        });
+    </script>
+
+</body>
+</html>
